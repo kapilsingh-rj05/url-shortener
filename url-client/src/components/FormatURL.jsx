@@ -4,7 +4,7 @@ const UrlCard = ({originalUrl, shortUrl, createdAt}) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`http://localhost:4000/url/${shortUrl}`);
+    navigator.clipboard.writeText(`srv-d87av6m7r5hc73ffele0/url/${shortUrl}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -25,12 +25,12 @@ const UrlCard = ({originalUrl, shortUrl, createdAt}) => {
           <div className="flex-1 min-w-0">
             {/* Clickable Short URL */}
             <a 
-              href={`http://localhost:4000/url/${shortUrl}`} 
+              href={`srv-d87av6m7r5hc73ffele0/url/${shortUrl}`} 
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-base font-bold text-slate-900 transition-colors hover:text-indigo-600 break-all"
             >
-              {`http://localhost:4000/url/${shortUrl}`}
+              {`srv-d87av6m7r5hc73ffele0/url/${shortUrl}`}
               <svg className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
