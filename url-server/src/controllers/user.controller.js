@@ -45,7 +45,9 @@ const loginUser = async(req,res) => {
 
     const options = {
         httpOnly: true,
-        secure: false
+        secure: true,
+        sameSite:none,
+        maxAge:24*60*60*1000
     }
 
     return res.status(200).cookie("accessToken", accessToken, options).cookie("refreshToken", refreshToken, options).json({status:"success"})
@@ -64,7 +66,9 @@ const logoutUser = async(req,res) => {
 
     const options = {
         httpOnly: true,
-        secure: false
+        secure: true,
+        sameSite: none,
+        maxAge: 24*60*60*1000
     }
 
     return res.status(200).clearCookie("accessToken", options).clearCookie("refreshToken", options).json({message:"User logged Out"})
