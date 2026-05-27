@@ -11,17 +11,19 @@ const Home = () => {
   const isLogin = useSelector((state)=>state.auth.status)
 
   const [urls, setUrls] = useState([])
+  const [refresh, setRefresh] = useState(false)
 
   useEffect(()=>{
-    if(isLogin){
+    if(isLogin || refresh){
       axios.get("/user/getUrls")
       .then((response)=>{
         setUrls(response.data)
+        setRefresh(false)
       }).catch((error)=>{
         console.log(error)
       })
     }
-  }, [isLogin])
+  }, [isLogin, refresh])
 
   return (
     <div>
@@ -30,7 +32,7 @@ const Home = () => {
         {isLogin && <div>
           <EncodeForm/>
           <DecodeForm/>
-          <div className="mb-6 flex flex-col gap-1 border-b border-slate-200/60 pb-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mb-6 flex flex-col gap-4 border-b border-slate-200/60 pb-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h1 className="text-xl font-extrabold tracking-tight text-slate-900 font-sans sm:text-2xl">
                 All URLs created by <span className="bg-gradient-to-r region bg-clip-text text-transparent from-indigo-600 to-blue-600">you</span>
@@ -39,6 +41,10 @@ const Home = () => {
                 Manage, copy, and track the analytics of your shortened links.
               </p>
             </div>
+            
+            <button className="self-start rounded-lg bg-gradient-to-r from-indigo-600 to-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all duration-200 hover:from-indigo-700 hover:to-blue-700 hover:shadow active:scale-95 sm:self-center sm:text-sm" onClick={()=>setRefresh(true)}>
+              REFRESH
+            </button>
           </div>
           {urls.map((url)=>(
             <FormatURL key={url._id} originalUrl={url.redirectUrl} shortUrl={url.shortId} createdAt={url.createdAt}/>

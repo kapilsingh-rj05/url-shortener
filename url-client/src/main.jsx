@@ -1,7 +1,7 @@
 // main.jsx — before ReactDOM.render/createRoot
 import axios from "axios"
 axios.defaults.withCredentials = true
-axios.defaults.baseURL = "https://url-shortener-backend-l35c.onrender.com"
+axios.defaults.baseURL = "http://localhost:4000"
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
@@ -12,6 +12,12 @@ import Login from './pages/Login.jsx'
 import Register from './pages/Register.jsx'
 import store from './store/store.js'
 import {Provider} from "react-redux"
+import VerifySession from "./components/VerifySession.jsx"
+import OtpForm from "./components/OtpForm.jsx"
+import PostOTP from "./pages/PostOTP.jsx"
+import TrackClicks from "./pages/TrackClicks.jsx"
+import Pricing from "./pages/Pricing.jsx"
+import Features from "./pages/Features.jsx"
 
 const router = createBrowserRouter([
   {
@@ -19,7 +25,10 @@ const router = createBrowserRouter([
     element:<App/>,
     children:[{
       path:"/",
-      element:<Home/>
+      element:
+      <VerifySession>
+        <Home/>
+      </VerifySession>
     },
     {
       path:"/Login",
@@ -28,6 +37,21 @@ const router = createBrowserRouter([
     {
       path:"/register",
       element:<Register/>
+    },{
+      path:"/register/otp",
+      element:<OtpForm/>
+    },{
+      path:"/register/postVerification",
+      elementL:<PostOTP/>
+    },{
+      path:"/click-tracking",
+      element:<TrackClicks/>
+    },{
+      path:"/pricing",
+      element:<Pricing/>
+    },{
+      path:"/features",
+      element:<Features/>
     }]
   }
 ])
