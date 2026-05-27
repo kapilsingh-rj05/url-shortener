@@ -18,7 +18,7 @@ const RegisterForm = () => {
 
     const onSubmit = (data) => {
         // Returning the promise tells react-hook-form exactly when to clear 'isSubmitting'
-        return axios.post("/user/register", data)
+        return axios.post("https://url-shortener-backend-l35c.onrender.com/user/register", data)
             .then((response) => {
                 if (response.data.status === "success") {
                     setStatus({ type: "success", text: "OTP sent to your email id" })
