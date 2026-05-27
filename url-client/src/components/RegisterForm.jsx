@@ -24,7 +24,7 @@ const RegisterForm = () => {
                     setStatus({ type: "success", text: "OTP sent to your email id" })
                     dispatch(userDetails({ email: data.email, username: data.username, password: data.password, fullName: data.fullName }))
                     
-                    navigate("register/otp", {
+                    navigate("/register/otp", {
                         state: {
                             email: data.email,
                             username: data.username,

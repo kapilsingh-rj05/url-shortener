@@ -42,7 +42,7 @@ const router = createBrowserRouter([
       element:<OtpForm/>
     },{
       path:"/register/postVerification",
-      elementL:<PostOTP/>
+      element:<PostOTP/>
     },{
       path:"/click-tracking",
       element:<TrackClicks/>
