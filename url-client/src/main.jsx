@@ -18,6 +18,10 @@ import PostOTP from "./pages/PostOTP.jsx"
 import TrackClicks from "./pages/TrackClicks.jsx"
 import Pricing from "./pages/Pricing.jsx"
 import Features from "./pages/Features.jsx"
+import ForgotPassword from "./components/ForgotPassword.jsx"
+import ChangePassword from "./components/ChangePassword.jsx"
+import PostForgot from "./pages/PostForgot"
+import OtpForgot from "./components/OtpForgot"
 
 const router = createBrowserRouter([
   {
@@ -52,6 +56,18 @@ const router = createBrowserRouter([
     },{
       path:"/features",
       element:<Features/>
+    },{
+      path:"/login/forgot",
+      element:<ForgotPassword/>
+    },{
+      path:"/changePassword",
+      element:<ChangePassword/>
+    },{
+      path:"/postForgot",
+      element:<PostForgot/>
+    },{
+      path:"/forgot/otp",
+      element:<OtpForgot/>
     }]
   }
 ])

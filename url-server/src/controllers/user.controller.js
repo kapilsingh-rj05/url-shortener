@@ -22,7 +22,7 @@ const generateAccessAndRefreshToken = async(userId)=>{
 }
 
 const loginUser = async(req,res) => {
-    const {username, password} = req.body
+    const {username, email, password} = req.body
 
     if(!username && !email){
         return res.status(400).json({error:"Username and email both can not be empty"})
@@ -228,6 +228,68 @@ const verifyOTPandRegister = async(req,res) => {
     return res.status(200).json({message:"OTP verified", status:"success"})
 }
 
+const forgotPassword = async(req, res) => {
+    const { email } = req.body
+
+    const user = await userModel.findOne({ email })  // fix: use userModel
+
+    if(!user) {
+        return res.status(404).json({ error: "User not registered" })
+    }
+
+    const fullName = user.fullName
+
+    const newCode = Math.floor(100000 + Math.random() * 900000)
+
+    await otpModel.deleteMany({ email })
+    await otpModel.create({ 
+        email, 
+        otp: newCode,
+        codeExpiresAt: new Date(Date.now() + 10*60*1000),
+        codeLastSentAt: new Date()
+    })
+
+    const htmlContent = getOtpTemplate(fullName, newCode)
+    const fallbackText = `Your Shortify verification OTP code is ${newCode}. It will expire in 10 minutes.`
+
+    await sendEmail(email, "Forgot Password OTP", fallbackText, htmlContent)  // fix: htmlContent not html
+
+    return res.status(200).json({ status: "success", message: "OTP sent successfully" })
+}
+
+const verifyOTP = async(req,res) => {
+    const {email, otp} = req.body
+
+    const otpRecord = await otpModel.findOne({email})
+
+    if(!otpRecord || String(otp).trim() !== String(otpRecord.otp).trim()){
+        return res.status(500).json({error:"OTP does not match"})
+    }
+
+    return res.status(200).json({status:"success", message:"OTP verified"})
+}
+
+const changePassword = async(req,res) => {
+    const {email, oldPassword, newPassword} = req.body
+    const existUser = await userModel.findOne({email})
+
+    if(!existUser){
+        return res.status(500).json({error:"User not found"})
+    }
+
+    const validPassword = await existUser.isPasswordCorrect(oldPassword)
+
+    if(!validPassword){
+        return res.staus(500).json({error:"Password did not match"})
+    }
+
+    existUser.password = newPassword;
+
+    await existUser.save()
+
+    return res.status(200).json({status:"success", message:"Password reset successfully"})
+}
+
 export {
     loginUser,
     logoutUser,
@@ -235,5 +297,8 @@ export {
     verifyOTPandRegister,
     getUrlsByUser,
     getUser,
-    resendCode
+    resendCode,
+    forgotPassword,
+    verifyOTP,
+    changePassword
 }

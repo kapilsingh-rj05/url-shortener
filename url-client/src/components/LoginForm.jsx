@@ -90,7 +90,7 @@ const LoginForm = () => {
       .catch((error) => {
         setStatus({ 
           type: "error", 
-          text: error.response?.data?.error || error.response?.data?.error || "An error occurred during login" 
+          text: error.response?.data?.error || "An error occurred during login" 
         })
       })
   }
@@ -118,12 +118,25 @@ const LoginForm = () => {
             {...register("username", { required: true })}
             className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
           />
-          <input 
-            type="password" 
-            placeholder="Password" 
-            {...register("password", { required: true })}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
-          />
+          
+          <div className="flex flex-col gap-1.5">
+            <input 
+              type="password" 
+              placeholder="Password" 
+              {...register("password", { required: true })}
+              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+            />
+            {/* Forgot Password Link Container */}
+            <div className="flex justify-end">
+              <Link 
+                to="/login/forgot" 
+                className="text-xs font-medium text-indigo-600 hover:text-indigo-500 hover:underline transition"
+              >
+                Forgot password?
+              </Link>
+            </div>
+          </div>
+
           <button 
             type="submit" 
             disabled={isSubmitting} // Disables the button dynamically
@@ -144,9 +157,10 @@ const LoginForm = () => {
               </>
             ) : "Login"}
           </button>
+          
           {/* Registration Redirect Text */}
           <p className="mt-2 text-center text-sm text-gray-600">
-            Don't have an account??{" "}
+            Don't have an account?{" "}
             <Link 
               to="/register" 
               className="font-medium text-indigo-600 hover:text-indigo-500 hover:underline transition"
@@ -157,7 +171,7 @@ const LoginForm = () => {
         </form>
       </div>
     </div>
-  )
+)
 }
 
 export default LoginForm
