@@ -1,7 +1,7 @@
 // main.jsx — before ReactDOM.render/createRoot
 import axios from "axios"
 axios.defaults.withCredentials = true
-axios.defaults.baseURL = "https://url-shortener-backend-l35c.onrender.com"
+axios.defaults.baseURL = "http://localhost:4000"
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'

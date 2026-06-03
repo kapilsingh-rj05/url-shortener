@@ -22,9 +22,9 @@ const generateAccessAndRefreshToken = async(userId)=>{
 }
 
 const loginUser = async(req,res) => {
-    const {username, email, password} = req.body
+    const {username, password} = req.body
 
-    if(!username && !email){
+    if(!username){
         return res.status(400).json({error:"Username and email both can not be empty"})
     }
 
